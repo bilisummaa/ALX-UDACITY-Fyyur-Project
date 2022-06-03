@@ -1,0 +1,19 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Fyyur | Venues{% endblock %}
+{% block content %}
+{% for venue_detail in venue_details %}
+<h3>{{ venue_detail.city }}, {{ venue_detail.state }}</h3>
+	<ul class="items">
+		{% for venue in venue_detail.venues %}
+		<li>
+			<a href="/venue/{{ venue.id }}">
+				<i class="fas fa-music"></i>
+				<div class="item">
+					<h5>{{ venue.name }}</h5>
+				</div>
+			</a>
+		</li>
+		{% endfor %}
+	</ul>
+{% endfor %}
+{% endblock %}
