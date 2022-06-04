@@ -43,14 +43,14 @@ class Venue(db.Model):
   state = db.Column(db.String(120),nullable=False)
   address = db.Column(db.String(120),nullable=False)
   phone = db.Column(db.String(120), nullable=False)
-  genre = db.Column(db.String(300), nullable=False)
+  genres = db.Column(db.String(300), nullable=False)
   image_link = db.Column(db.String(500))
   facebook_link = db.Column(db.String(120))
   website = db.Column(db.String(120), nullable=False)
   shows = db.relationship('Shows', backref='venue', lazy=False)
   
   def __repr__(self):
-    return f'<Venue: {self.id}, name: {self.name}, city: {self.city}, state: {self.state}, address: {self.address}, phone: {self.phone}, image_link: {self.image_link}, facebook_link: {self.facebook_link}, genres: {self.genre}, website: {self.website}, shows: {self.shows}>'
+    return f'<Venue: {self.id}, name: {self.name}, city: {self.city}, state: {self.state}, address: {self.address}, phone: {self.phone}, image_link: {self.image_link}, facebook_link: {self.facebook_link}, genres: {self.genres}, website: {self.website}, shows: {self.shows}>'
   
 
 class Artist(db.Model):
@@ -61,14 +61,14 @@ class Artist(db.Model):
   city = db.Column(db.String(120), nullable=False)
   state = db.Column(db.String(120), nullable=False)
   phone = db.Column(db.String(120), nullable=False)
-  genre = db.Column(db.String(300), nullable=False)
+  genres = db.Column(db.String(300), nullable=False)
   image_link = db.Column(db.String(500))
   facebook_link = db.Column(db.String(120))
   website = db.Column(db.String(120))
   shows = db.relationship('Shows', backref='artist', lazy=False)
 
   def __repr__(self):
-    return f'<Artist: {self.id}, name: {self.name}, city: {self.city}, state: {self.state}, phone: {self.phone}, genres: {self.genre}, image_link: {self.image_link}, facebook_link: {self.facebook_link}, shows: {self.shows}>'
+    return f'<Artist: {self.id}, name: {self.name}, city: {self.city}, state: {self.state}, phone: {self.phone}, genres: {self.genres}, image_link: {self.image_link}, facebook_link: {self.facebook_link}, shows: {self.shows}>'
 
 class Shows(db.Model):
   _tablename__ = 'shows'
@@ -207,12 +207,12 @@ def create_venue_submission():
     state = request_data['state']
     phone = request_data['phone']
     address = request_data['address']
-    genre = json.dumps(request_data['genres'])
+    genres = json.dumps(request_data['genres'])
     facebook_link = request_data['facebook_link']
     image_link = request_data['image_link']
     website = request_data['website']
     
-    venue = Venue(name=name, city=city, state=state, phone=phone, address=address, genre=genre, facebook_link=facebook_link, image_link=image_link, website=website)
+    venue = Venue(name=name, city=city, state=state, phone=phone, address=address, genres=genres, facebook_link=facebook_link, image_link=image_link, website=website)
     db.session.add(venue)
     db.session.commit()
   except:
@@ -414,12 +414,12 @@ def create_artist_submission():
     city = request_data['city']
     state = request_data['state']
     phone = request_data['phone']
-    genre = json.dumps(request_data['genres'])
+    genres = json.dumps(request_data['genres'])
     facebook_link = request_data['facebook_link']
     website = request_data['website']
     image_link = request_data['image_link']
     
-    artist = Artist(name=name, city=city, state=state, phone=phone, genre=genre, facebook_link=facebook_link, image_link=image_link, website=website)
+    artist = Artist(name=name, city=city, state=state, phone=phone, genres=genres, facebook_link=facebook_link, image_link=image_link, website=website)
     db.session.add(artist)
     db.session.commit()
   except:
